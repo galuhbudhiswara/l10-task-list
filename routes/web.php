@@ -44,13 +44,6 @@ Route::get('/tasks/{task}', function (Task $task) {
 
 
 Route::post('/tasks', function (TaskRequest $request) {
-    // $data = $request->validated();
-    // $task = new Task;
-    // $task->title = $data['title'];
-    // $task->description = $data['description'];
-    // $task->long_description = $data['long_description'];
-    // $task->save();
-
     $task = Task::create($request->validated());
 
     return redirect()
@@ -61,19 +54,19 @@ Route::post('/tasks', function (TaskRequest $request) {
 
 
 Route::put('/tasks{task}', function (Task $task, TaskRequest $request) {
-
-    // $data = $request->validated();
-    // $task->title = $data['title'];
-    // $task->description = $data['description'];
-    // $task->long_description = $data['long_description'];
-    // $task->save();
-
     $task->update($request->validated());
     return redirect()
         ->route('tasks.show', ['task' => $task->id])
         ->with('success', 'Task Created Succesfully');
 })->name('tasks.update');
 
+
+Route::delete('/task/{task}', function (Task $task) {
+    $task->delete();
+
+    return redirect()->route('tasks.index')
+        ->with('success', 'Task Deleted Successfully!');
+})->name('tasks.destroy');
 
 
 Route::fallback(function () {
