@@ -3,22 +3,20 @@
 
 @section('title', 'The list of tasks')
 
-<div>
-    {{-- @if (count($tasks))
-        @foreach ($tasks as $tasks)
-            <div>{{ $tasks-> title }}</div>
-        @endforeach
-    @else
-        <div>There are no task</div>
-    @endif --}}
 
 @section('content')
-    @forelse ($tasks as $tasks)
+    @forelse ($tasks as $task)
         <div>
-            <a href="{{ route('tasks.show', ['task' => $tasks->id]) }}">{{ $tasks->title }}</a>
+            <a href="{{ route('tasks.show', ['task' => $task->id]) }}">{{ $task->title }}</a>
         </div>
     @empty
         <div>There is no tasks</div>
     @endforelse
-</div>
+
+    @if ($tasks->count())
+        <nav>
+            {{ $tasks->links() }}
+        </nav>
+    @endif
+
 @endsection
